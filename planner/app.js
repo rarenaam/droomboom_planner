@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 import { getFirestore, doc, onSnapshot, setDoc, updateDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
-// 1. Jouw Firebase configuratie (Kopieer exact dezelfde als in de tablet app.js)
+// 1. Jouw Firebase configuratie
 const firebaseConfig = {
   apiKey: "AIzaSyBpJ7VnA7Z9zrb8K4adtz8g4lpXeyk_i2M",
   authDomain: "studio-6160446129-eb66a.firebaseapp.com",
@@ -19,16 +19,42 @@ const vandaag = new Date();
 const datumSleutel = `${vandaag.getFullYear()}-${String(vandaag.getMonth() + 1).padStart(2, '0')}-${String(vandaag.getDate()).padStart(2, '0')}`;
 
 const planningRef = doc(db, "planningen", datumSleutel);
+const begeleidersConfigRef = doc(db, "instellingen", "begeleidersDoc"); // Verwijzing naar je collega-beheer
 
 // 3. DOM Elementen ophalen
 const addChildForm = document.getElementById('add-child-form');
 const editorGrid = document.getElementById('editor-grid');
+const selectBegeleider = document.getElementById('select-begeleider');
+
+// === NIEUW: Live inladen van de collega's in het keuzemenu (<select>) ===
+onSnapshot(begeleidersConfigRef, (snapshot) => {
+    // Reset de select-opties, maar behoud de allereerste "Kies begeleider..." placeholder
+    selectBegeleider.innerHTML = '<option value="" disabled selected>Kies begeleider...</option>';
+
+    if (snapshot.exists() && snapshot.data().namen) {
+        const namen = snapshot.data().namen;
+        
+        // Voeg elke live collega toe aan het keuzemenu
+        namen.forEach(naam => {
+            const option = document.createElement('option');
+            option.value = naam;
+            option.innerText = naam;
+            selectBegeleider.appendChild(option);
+        });
+    }
+    
+    // Voeg als vaste fallback altijd de Flexplek optie onderaan toe
+    const flexOption = document.createElement('option');
+    flexOption.value = "Flexplek";
+    flexOption.innerText = "Flexplek / Onbekend";
+    selectBegeleider.appendChild(flexOption);
+});
 
 // 4. Live de huidige verdeling inladen in de editor
 onSnapshot(planningRef, (snapshot) => {
     editorGrid.innerHTML = "";
 
-    if (snapshot.exists()) {
+    if (snapshot.exists() && snapshot.data().begeleiders) {
         const data = snapshot.data().begeleiders;
 
         for (const [begeleider, kinderen] of Object.entries(data)) {
@@ -37,7 +63,7 @@ onSnapshot(planningRef, (snapshot) => {
             
             let kinderenHtml = '';
             
-            if (kinderen.length === 0) {
+            if (!kinderen || kinderen.length === 0) {
                 kinderenHtml = '<p style="color: #95a5a6; font-style: italic; margin: 0;">Geen kinderen</p>';
             } else {
                 kinderen.forEach(kind => {
@@ -60,14 +86,14 @@ onSnapshot(planningRef, (snapshot) => {
         // Knoppen voor verwijderen activeren
         document.querySelectorAll('.btn-delete').forEach(button => {
             button.addEventListener('click', (e) => {
-                const begeleider = e.target.getAttribute('data-begeleider');
-                const kind = e.target.getAttribute('data-kind');
+                const buttonElement = e.target.closest('.btn-delete');
+                const begeleider = buttonElement.getAttribute('data-begeleider');
+                const kind = buttonElement.getAttribute('data-kind');
                 verwijderKind(begeleider, kind);
             });
         });
 
     } else {
-        // Als er nog helemaal geen planning is voor vandaag, maken we een lege basishandeling aan
         editorGrid.innerHTML = "<p>Nog geen planning voor vandaag. Voeg een kind toe om te beginnen!</p>";
     }
 });
@@ -76,13 +102,11 @@ onSnapshot(planningRef, (snapshot) => {
 addChildForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const kindNaam = document.getElementById('child-name').value.trim();
-    const geselecteerdeBegeleider = document.getElementById('select-begeleider').value;
+    const geselecteerdeBegeleider = selectBegeleider.value;
 
     if (!kindNaam || !geselecteerdeBegeleider) return;
 
     try {
-        // We gebruiken setDoc met { merge: true }. Als het document nog niet bestaat maakt hij het aan, 
-        // anders voegt hij het kind toe aan de array van de gekozen begeleider.
         await setDoc(planningRef, {
             begeleiders: {
                 [geselecteerdeBegeleider]: arrayUnion(kindNaam)
@@ -91,7 +115,7 @@ addChildForm.addEventListener('submit', async (e) => {
 
         // Formulier resetten
         document.getElementById('child-name').value = "";
-        document.getElementById('select-begeleider').selectedIndex = 0;
+        selectBegeleider.selectedIndex = 0;
     } catch (error) {
         console.error("Fout bij toevoegen:", error);
         alert("Er ging iets mis bij het opslaan.");
@@ -109,43 +133,38 @@ async function verwijderKind(begeleider, kindNaam) {
     }
 }
 
+// --- INTERFACE LOGICA (THEMA & MENU) ---
+
 const themeButton = document.getElementById('theme-button');
 
-// Check bij het laden of de gebruiker al eerder donkere modus heeft gekozen
 if (localStorage.getItem('theme') === 'dark') {
     document.body.classList.add('dark-mode');
     themeButton.innerText = "☀️ Licht";
 }
 
-// Luister naar klikken op de knop
 themeButton.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');
-    
     if (document.body.classList.contains('dark-mode')) {
         themeButton.innerText = "☀️ Licht";
-        localStorage.setItem('theme', 'dark'); // Opslaan in de browser
+        localStorage.setItem('theme', 'dark');
     } else {
         themeButton.innerText = "🌙 Donker";
-        localStorage.setItem('theme', 'light'); // Opslaan in de browser
+        localStorage.setItem('theme', 'light');
     }
 });
 
-// Sidebar logica openen en sluiten
 const sidebar = document.getElementById('sidebar');
 const menuToggle = document.getElementById('menu-toggle');
 const menuClose = document.getElementById('menu-close');
 
-// Open menu bij klik op hamburger
 menuToggle.addEventListener('click', () => {
     sidebar.classList.add('open');
 });
 
-// Sluit menu bij klik op kruisje
 menuClose.addEventListener('click', () => {
     sidebar.classList.remove('open');
 });
 
-// Sluit menu automatisch als je ergens buiten de sidebar klikt
 document.addEventListener('click', (e) => {
     if (!sidebar.contains(e.target) && e.target !== menuToggle) {
         sidebar.classList.remove('open');
