@@ -16,9 +16,7 @@ const db = getFirestore(app);
 const configRef = doc(db, "instellingen", "begeleidersDoc");
 
 // === PLAK HIERONDER JE SHAREPOINT DOWNLOAD LINK TUSSEN DE AANHALINGSTEKENS ===
-const excelCsvUrl = "https://stichtingdedroomboom.sharepoint.com/sites/DirectieKluis/_layouts/15/Doc.aspx?sourcedoc={313e7626-e388-440c-8c33-a22e4b01413d}&action=download&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&wdInConfigurator=True&wdInConfigurator=True&edaebf=rslc0
-";
-
+const excelCsvUrl = "https://stichtingdedroomboom.sharepoint.com/sites/DirectieKluis/_layouts/15/Doc.aspx?sourcedoc={313e7626-e388-440c-8c33-a22e4b01413d}&action=download&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&wdInConfigurator=True&wdInConfigurator=True&edaebf=rslc0";
 const lijstDiv = document.getElementById('collega-lijst');
 
 // Functie die de SharePoint Excel live uitleest en naar Firebase stuurt
