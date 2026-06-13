@@ -1,1 +1,41 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Droomboom — Planning Bewerken</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+    <header>
+        <a href="../" class="btn-back">⬅ Terug</a>
+        <h1>Planning Aanpassen</h1>
+    </header>
+
+    <main class="editor-container">
+        <section class="form-section">
+            <h2>Kind toevoegen aan vandaag</h2>
+            <form id="add-child-form">
+                <input type="text" id="child-name" placeholder="Naam van het kind..." required>
+                <select id="select-begeleider" required>
+                    <option value="" disabled selected>Kies begeleider...</option>
+                    <option value="Sanne">Sanne</option>
+                    <option value="Mark">Mark</option>
+                    <option value="Flexplek">Flexplek / Onbekend</option>
+                </select>
+                <button type="submit">Toevoegen</button>
+            </form>
+        </section>
+
+        <section class="overview-section">
+            <h2>Huidige verdeling</h2>
+            <div id="editor-grid" class="grid-container">
+                <p>Data laden uit Firebase...</p>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="app.js" defer></script>
+</body>
+</html>
