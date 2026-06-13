@@ -4,6 +4,7 @@
     --dark-color: #2c3e50;
     --light-bg: #f9fbf9;
     --container-bg: #ffffff;
+    --border-color: #ccc;
 }
 
 /* Wanneer de 'dark-mode' klasse op de body staat, veranderen deze kleuren automatisch */
@@ -11,6 +12,7 @@ body.dark-mode {
     --light-bg: #1a1a1a;
     --dark-color: #f5f5f5;
     --container-bg: #2d2d2d;
+    --border-color: #444444;
 }
 
 body {
@@ -94,7 +96,7 @@ p {
     right: 20px;
     background: var(--container-bg);
     color: var(--dark-color);
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-color);
     padding: 10px 16px;
     border-radius: 20px;
     cursor: pointer;
@@ -105,4 +107,114 @@ p {
 
 .theme-toggle:hover {
     transform: scale(1.05);
+}
+
+/* --- NIEUW: HAMBURGER MENU & SIDEBAR STYLING --- */
+
+/* De hamburger knop linksboven */
+.hamburger-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: var(--container-bg);
+    color: var(--dark-color);
+    border: 1px solid var(--border-color);
+    padding: 10px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: all 0.2s;
+    z-index: 100;
+}
+
+.hamburger-btn:hover {
+    transform: scale(1.05);
+}
+
+/* De verticale Sidebar (standaard onzichtbaar aan de linkerkant) */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 290px;
+    height: 100vh;
+    background-color: var(--container-bg);
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 25px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    
+    /* Verschuift het menu volledig buiten het beeld naar links */
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out; 
+}
+
+/* Wordt geactiveerd via JavaScript */
+.sidebar.open {
+    transform: translateX(0);
+}
+
+/* Sluitknop (kruisje) bovenin de sidebar */
+.close-btn {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    color: var(--dark-color);
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.2s;
+}
+
+.close-btn:hover {
+    transform: scale(1.1);
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 2px solid var(--light-bg);
+    padding-bottom: 15px;
+}
+
+.sidebar-header h2 {
+    margin: 0;
+    font-size: 1.6rem;
+}
+
+/* Lijst met verticale links */
+.sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.sidebar-links li a {
+    display: block;
+    padding: 14px 16px;
+    color: var(--dark-color);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    background-color: var(--light-bg);
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.sidebar-links li a:hover {
+    background-color: #e2e8f0;
+    transform: translateX(5px); /* Schuift subtiel op bij hover */
+}
+
+/* Aanpassing voor hover in donkere modus */
+body.dark-mode .sidebar-links li a:hover {
+    background-color: #3d3d3d;
 }
