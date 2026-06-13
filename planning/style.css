@@ -21,7 +21,7 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     margin: 0;
-    padding: 24px;
+    padding: 80px 24px 24px 24px; /* Ruimte aan de bovenkant gemaakt voor de absolute knoppen */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -76,8 +76,8 @@ header {
     background: var(--card-bg);
     color: var(--text-color);
     border: 1px solid var(--border-color);
-    padding: 10px 20px; /* Gelijke padding als de datum-badge */
-    border-radius: 30px; /* Mooi rond net als de datum-badge */
+    padding: 10px 16px;
+    border-radius: 20px;
     cursor: pointer;
     font-weight: bold;
     font-size: 1rem;
@@ -137,4 +137,107 @@ header {
     font-size: 1.2rem;
     color: #7f8c8d;
     padding: 50px;
+}
+
+/* --- RESTRYLED: VERTICALE SIDEBAR & HAMBURGER (EXACT GELIJK AAN DE REST) --- */
+
+.hamburger-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 10px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: all 0.2s;
+    z-index: 100;
+}
+
+.hamburger-btn:hover {
+    transform: scale(1.05);
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 290px;
+    height: 100vh;
+    background-color: var(--card-bg);
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 25px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out; 
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+.close-btn {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.2s;
+}
+
+.close-btn:hover {
+    transform: scale(1.1);
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 2px solid var(--bg-color);
+    padding-bottom: 15px;
+}
+
+.sidebar-header h2 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: var(--text-color);
+}
+
+.sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.sidebar-links li a {
+    display: block;
+    padding: 14px 16px;
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    background-color: var(--bg-color);
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.sidebar-links li a:hover {
+    background-color: #e2e8f0;
+    transform: translateX(5px);
+}
+
+body.dark-mode .sidebar-links li a:hover {
+    background-color: #3d3d3d;
 }
