@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Droomboom — Collega's Beheren</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <button id="menu-toggle" class="hamburger-btn">☰ Menu</button>
+    <button id="theme-button" class="theme-toggle">🌙 Donker</button>
+
+    <nav id="sidebar" class="sidebar">
+        <button id="menu-close" class="close-btn">✕ Sluiten</button>
+        <div class="sidebar-header">
+            <span class="tree-icon">🌳</span>
+            <h2>Droomboom</h2>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="../"><span class="icon">🏠</span> Startpagina</a></li>
+            <li><a href="../planning/"><span class="icon">📺</span> Live Planbord</a></li>
+            <li><a href="index.html"><span class="icon">✍️</span> Planning Aanpassen</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <div class="header-left">
+            <h1>Collega's Managen</h1>
+        </div>
+    </header>
+
+    <main class="editor-container">
+        <section class="form-section">
+            <h2>Nieuwe collega toevoegen (Aannemen)</h2>
+            <form id="add-begeleider-form">
+                <input type="text" id="begeleider-name" placeholder="Naam van de collega..." required>
+                <button type="submit">Toevoegen</button>
+            </form>
+        </section>
+
+        <section class="overview-section">
+            <h2>Huidige Begeleiders (Ontslaan / Weghalen)</h2>
+            <div id="collega-lijst" class="kinderen-list">
+                <p>Collega's laden uit Firebase...</p>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="collegas.js" defer></script>
+</body>
+</html>
