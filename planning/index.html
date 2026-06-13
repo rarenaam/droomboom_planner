@@ -1,1 +1,27 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Droomboom — Live Planbord</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+    <header>
+        <div class="logo-title">
+            <span class="tree-icon">🌳</span>
+            <h1>Live Planbord De Droomboom</h1>
+        </div>
+        <div id="live-date" class="date-badge">Laden...</div>
+    </header>
+
+    <main>
+        <div id="planbord-grid" class="grid-container">
+            <div class="loading-message">Planning ophalen uit Firebase...</div>
+        </div>
+    </main>
+
+    <script type="module" src="app.js" defer></script>
+</body>
+</html>
