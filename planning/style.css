@@ -4,6 +4,16 @@
     --primary-blue: #2196F3;
     --text-color: #2c3e50;
     --child-bg: #eef2f5;
+    --border-color: #e0e0e0;
+}
+
+/* Donkere modus variabelen */
+body.dark-mode {
+    --bg-color: #1a1a1a;
+    --card-bg: #2d2d2d;
+    --text-color: #f5f5f5;
+    --child-bg: #3d3d3d;
+    --border-color: #444444;
 }
 
 body {
@@ -16,6 +26,7 @@ body {
     flex-direction: column;
     min-height: 100vh;
     box-sizing: border-box;
+    transition: background-color 0.3s, color 0.3s; /* Vloeiende overgang */
 }
 
 header {
@@ -24,7 +35,7 @@ header {
     align-items: center;
     margin-bottom: 30px;
     padding-bottom: 15px;
-    border-bottom: 2px solid #e0e0e0;
+    border-bottom: 2px solid var(--border-color);
 }
 
 .logo-title {
@@ -42,6 +53,13 @@ header {
     font-size: 2.5rem;
 }
 
+/* Container voor de knoppen/badges aan de rechterkant van de header */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
 .date-badge {
     background-color: var(--primary-blue);
     color: white;
@@ -50,6 +68,23 @@ header {
     font-weight: bold;
     font-size: 1.1rem;
     box-shadow: 0 4px 10px rgba(33, 150, 243, 0.2);
+}
+
+/* Knop voor thema wissel */
+.theme-toggle {
+    background: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 10px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: all 0.2s;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.05);
 }
 
 /* Zorgt voor automatische kolommen die meeschalen met het scherm */
@@ -65,6 +100,7 @@ header {
     padding: 20px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
     border-top: 5px solid var(--primary-blue);
+    transition: background-color 0.3s;
 }
 
 .begeleider-card h2 {
@@ -89,6 +125,7 @@ header {
     display: flex;
     align-items: center;
     gap: 10px;
+    transition: background-color 0.3s;
 }
 
 .loading-message {
