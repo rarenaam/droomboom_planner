@@ -1,0 +1,78 @@
+:root {
+    --primary-color: #4CAF50; /* Droomboom-groen */
+    --secondary-color: #2196F3; /* Helder blauw */
+    --dark-color: #2c3e50;
+    --light-bg: #f9fbf9;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--light-bg);
+    color: var(--dark-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.container {
+    text-align: center;
+    padding: 30px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    max-width: 500px;
+    width: 90%;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: var(--dark-color);
+}
+
+p {
+    color: #7f8c8d;
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+}
+
+.button-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.btn {
+    display: block;
+    padding: 20px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    border-radius: 12px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.btn-tablet {
+    background: linear-gradient(135deg, var(--secondary-color), #00d2ff);
+}
+
+.btn-editor {
+    background: linear-gradient(135deg, var(--primary-color), #81C784);
+}
+
+.icon {
+    font-size: 1.6rem;
+    margin-right: 10px;
+    vertical-align: middle;
+}
