@@ -1,1 +1,154 @@
+:root {
+    --primary-green: #4CAF50;
+    --primary-blue: #2196F3;
+    --danger-red: #e74c3c;
+    --dark-color: #2c3e50;
+    --bg-color: #f4f7f6;
+    --card-bg: #ffffff;
+}
 
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--dark-color);
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 15px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.btn-back {
+    text-decoration: none;
+    color: var(--dark-color);
+    background: #e0e0e0;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.btn-back:hover {
+    background: #d5d5d5;
+}
+
+.editor-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Formulier Styling */
+.form-section {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+#add-child-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#add-child-form input, 
+#add-child-form select, 
+#add-child-form button {
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+#add-child-form button {
+    background-color: var(--primary-green);
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#add-child-form button:hover {
+    background-color: #45a049;
+}
+
+/* Huidige verdeling Grid */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.begeleider-card {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border-top: 5px solid var(--primary-blue);
+}
+
+.begeleider-card h2 {
+    margin-top: 0;
+    font-size: 1.3rem;
+}
+
+.kinderen-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Kind rij met actieknop */
+.kind-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 6px;
+    border-left: 3px solid #ccc;
+}
+
+.kind-name {
+    font-weight: 500;
+}
+
+.btn-delete {
+    background: none;
+    border: none;
+    color: var(--danger-red);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+.btn-delete:hover {
+    transform: scale(1.2);
+}
+
+/* Mobiele optimalisatie */
+@media (min-width: 600px) {
+    #add-child-form {
+        flex-direction: row;
+    }
+    #add-child-form input { flex: 2; }
+    #add-child-form select { flex: 1; }
+    #add-child-form button { flex: 1; }
+}
