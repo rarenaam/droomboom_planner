@@ -3,6 +3,14 @@
     --secondary-color: #2196F3; /* Helder blauw */
     --dark-color: #2c3e50;
     --light-bg: #f9fbf9;
+    --container-bg: #ffffff;
+}
+
+/* Wanneer de 'dark-mode' klasse op de body staat, veranderen deze kleuren automatisch */
+body.dark-mode {
+    --light-bg: #1a1a1a;
+    --dark-color: #f5f5f5;
+    --container-bg: #2d2d2d;
 }
 
 body {
@@ -16,16 +24,18 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    transition: background-color 0.3s, color 0.3s; /* Zorgt voor een vloeiende overgang */
 }
 
 .container {
     text-align: center;
     padding: 30px;
-    background: white;
+    background: var(--container-bg); /* Gebruikt nu de variabele */
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     max-width: 500px;
     width: 90%;
+    transition: background-color 0.3s;
 }
 
 h1 {
@@ -75,4 +85,24 @@ p {
     font-size: 1.6rem;
     margin-right: 10px;
     vertical-align: middle;
+}
+
+/* De styling voor de donkere modus knop */
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--container-bg);
+    color: var(--dark-color);
+    border: 1px solid #ccc;
+    padding: 10px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: all 0.2s;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.05);
 }
