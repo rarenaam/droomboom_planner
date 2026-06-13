@@ -3,12 +3,12 @@ import { getFirestore, doc, onSnapshot, setDoc, updateDoc, arrayUnion, arrayRemo
 
 // 1. Jouw Firebase configuratie (Kopieer exact dezelfde als in de tablet app.js)
 const firebaseConfig = {
-    apiKey: "JOUW_API_KEY",
-    authDomain: "JOUW_PROJECT.firebaseapp.com",
-    projectId: "JOUW_PROJECT_ID",
-    storageBucket: "JOUW_PROJECT.appspot.com",
-    messagingSenderId: "...",
-    appId: "..."
+  apiKey: "AIzaSyBpJ7VnA7Z9zrb8K4adtz8g4lpXeyk_i2M",
+  authDomain: "studio-6160446129-eb66a.firebaseapp.com",
+  projectId: "studio-6160446129-eb66a",
+  storageBucket: "studio-6160446129-eb66a.firebasestorage.app",
+  messagingSenderId: "248966967112",
+  appId: "1:248966967112:web:415456d13a30e164790d7d"
 };
 
 const app = initializeApp(firebaseConfig);
