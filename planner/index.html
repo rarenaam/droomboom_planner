@@ -8,25 +8,39 @@
 </head>
 <body>
 
+    <button id="menu-toggle" class="hamburger-btn">☰ Menu</button>
+    <button id="theme-button" class="theme-toggle">🌙 Donker</button>
+
+    <nav id="sidebar" class="sidebar">
+        <button id="menu-close" class="close-btn">✕ Sluiten</button>
+        <div class="sidebar-header">
+            <span class="tree-icon">🌳</span>
+            <h2>Droomboom</h2>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="../"><span class="icon">🏠</span> Startpagina</a></li>
+            <li><a href="../planning/"><span class="icon">📺</span> Live Planbord</a></li>
+            <li><a href="collegas.html"><span class="icon">👤</span> Collega's Managen</a></li>
+        </ul>
+    </nav>
+
     <header>
         <div class="header-left">
-            <a href="../" class="btn-back">⬅ Terug</a>
             <h1>Planning Aanpassen</h1>
         </div>
         <div class="header-right">
-            <button id="theme-button" class="theme-toggle">🌙 Donker</button>
-        </div>
+            </div>
     </header>
 
     <main class="editor-container">
+        <a href="collegas.html" class="link-manage">👤 Collega's beheren (Aannemen/Ontslaan) →</a>
+
         <section class="form-section">
             <h2>Kind toevoegen aan vandaag</h2>
             <form id="add-child-form">
                 <input type="text" id="child-name" placeholder="Naam van het kind..." required>
                 <select id="select-begeleider" required>
                     <option value="" disabled selected>Kies begeleider...</option>
-                    <option value="Sanne">Sanne</option>
-                    <option value="Mark">Mark</option>
                     <option value="Flexplek">Flexplek / Onbekend</option>
                 </select>
                 <button type="submit">Toevoegen</button>
