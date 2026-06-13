@@ -1,0 +1,274 @@
+:root {
+    --primary-green: #4CAF50;
+    --primary-blue: #2196F3;
+    --danger-red: #e74c3c;
+    --dark-color: #2c3e50;
+    --bg-color: #f4f7f6;
+    --card-bg: #ffffff;
+    --border-color: #e0e0e0;
+    --input-bg: #ffffff;
+    --row-bg: #f8f9fa;
+    --row-border: #ccc;
+}
+
+/* Donkere modus variabelen */
+body.dark-mode {
+    --bg-color: #1a1a1a;
+    --dark-color: #f5f5f5;
+    --card-bg: #2d2d2d;
+    --border-color: #444444;
+    --input-bg: #3d3d3d;
+    --row-bg: #383838;
+    --row-border: #555555;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--dark-color);
+    margin: 0;
+    padding: 80px 20px 20px 20px; /* Ruimte aan de bovenkant voor de menu- en donkerknop */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.editor-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Formulier voor nieuwe collega's */
+.form-section {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: background-color 0.3s;
+}
+
+.form-section h2, .overview-section h2 {
+    margin-top: 0;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+}
+
+#add-begeleider-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#add-begeleider-form input {
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--input-bg);
+    color: var(--dark-color);
+    box-sizing: border-box;
+}
+
+#add-begeleider-form button {
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    box-sizing: border-box;
+    background-color: var(--primary-green);
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#add-begeleider-form button:hover {
+    background-color: #45a049;
+}
+
+/* Lijst met huidige collega's (Weergegeven als strakke rijen) */
+.kinderen-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.kind-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--row-bg);
+    padding: 14px 20px;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-blue); /* Blauw randje voor de professionele look */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    transition: background-color 0.3s;
+}
+
+.kind-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* Prullenbak / Verwijderknop */
+.btn-delete {
+    background: none;
+    border: none;
+    color: var(--danger-red);
+    font-size: 1.3rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.btn-delete:hover {
+    transform: scale(1.15);
+    background-color: rgba(231, 76, 60, 0.1); /* Subtiele rode gloed bij hover */
+}
+
+/* --- VASTE POSITIES BOVENSTE KNOPPEN (EXACT GELIJK AAN DE APPS) --- */
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--card-bg);
+    color: var(--dark-color);
+    border: 1px solid var(--border-color);
+    padding: 10px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: all 0.2s;
+    z-index: 100;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.05);
+}
+
+.hamburger-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: var(--card-bg);
+    color: var(--dark-color);
+    border: 1px solid var(--border-color);
+    padding: 10px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: all 0.2s;
+    z-index: 100;
+}
+
+.hamburger-btn:hover {
+    transform: scale(1.05);
+}
+
+/* --- REPRONSIVE SIDEBAR STYLING --- */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 290px;
+    height: 100vh;
+    background-color: var(--card-bg);
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 25px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out; 
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+.close-btn {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    color: var(--dark-color);
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.2s;
+}
+
+.close-btn:hover {
+    transform: scale(1.1);
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 2px solid var(--bg-color);
+    padding-bottom: 15px;
+}
+
+.sidebar-header h2 {
+    margin: 0;
+    font-size: 1.6rem;
+}
+
+.sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.sidebar-links li a {
+    display: block;
+    padding: 14px 16px;
+    color: var(--dark-color);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    background-color: var(--bg-color);
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.sidebar-links li a:hover {
+    background-color: #e2e8f0;
+    transform: translateX(5px);
+}
+
+body.dark-mode .sidebar-links li a:hover {
+    background-color: #3d3d3d;
+}
+
+/* Mobiele optimalisatie voor het invoerveld en de knop */
+@media (min-width: 600px) {
+    #add-begeleider-form {
+        flex-direction: row;
+    }
+    #add-begeleider-form input { flex: 3; }
+    #add-begeleider-form button { flex: 1; }
+}
