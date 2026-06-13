@@ -5,6 +5,21 @@
     --dark-color: #2c3e50;
     --bg-color: #f4f7f6;
     --card-bg: #ffffff;
+    --border-color: #e0e0e0;
+    --input-bg: #ffffff;
+    --row-bg: #f8f9fa;
+    --row-border: #ccc;
+}
+
+/* Donkere modus variabelen */
+body.dark-mode {
+    --bg-color: #1a1a1a;
+    --dark-color: #f5f5f5;
+    --card-bg: #2d2d2d;
+    --border-color: #444444;
+    --input-bg: #3d3d3d;
+    --row-bg: #383838;
+    --row-border: #555555;
 }
 
 body {
@@ -13,15 +28,22 @@ body {
     color: var(--dark-color);
     margin: 0;
     padding: 20px;
+    transition: background-color 0.3s, color 0.3s; /* Vloeiende overgang */
 }
 
 header {
     display: flex;
     align-items: center;
-    gap: 20px;
+    justify-content: space-between; /* Zorgt dat de knop netjes rechts staat */
     margin-bottom: 30px;
-    border-bottom: 2px solid #e0e0e0;
+    border-bottom: 2px solid var(--border-color);
     padding-bottom: 15px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
 header h1 {
@@ -32,7 +54,7 @@ header h1 {
 .btn-back {
     text-decoration: none;
     color: var(--dark-color);
-    background: #e0e0e0;
+    background: var(--border-color);
     padding: 8px 16px;
     border-radius: 8px;
     font-weight: bold;
@@ -40,7 +62,7 @@ header h1 {
 }
 
 .btn-back:hover {
-    background: #d5d5d5;
+    filter: brightness(0.9);
 }
 
 .editor-container {
@@ -57,6 +79,7 @@ header h1 {
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: background-color 0.3s;
 }
 
 #add-child-form {
@@ -66,16 +89,21 @@ header h1 {
 }
 
 #add-child-form input, 
-#add-child-form select, 
-#add-child-form button {
+#add-child-form select {
     padding: 12px;
     font-size: 1rem;
     border-radius: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-color);
+    background-color: var(--input-bg);
+    color: var(--dark-color);
     box-sizing: border-box;
 }
 
 #add-child-form button {
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    box-sizing: border-box;
     background-color: var(--primary-green);
     color: white;
     font-weight: bold;
@@ -101,6 +129,7 @@ header h1 {
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     border-top: 5px solid var(--primary-blue);
+    transition: background-color 0.3s;
 }
 
 .begeleider-card h2 {
@@ -120,10 +149,11 @@ header h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #f8f9fa;
+    background: var(--row-bg);
     padding: 10px;
     border-radius: 6px;
-    border-left: 3px solid #ccc;
+    border-left: 3px solid var(--row-border);
+    transition: background-color 0.3s;
 }
 
 .kind-name {
@@ -141,6 +171,23 @@ header h1 {
 
 .btn-delete:hover {
     transform: scale(1.2);
+}
+
+/* Knop voor thema wissel */
+.theme-toggle {
+    background: var(--card-bg);
+    color: var(--dark-color);
+    border: 1px solid var(--border-color);
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: all 0.2s;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.05);
 }
 
 /* Mobiele optimalisatie */
