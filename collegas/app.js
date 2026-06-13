@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-import { getFirestore, doc, onSnapshot, setDoc, updateDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { getFirestore, doc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
-// === VUL HIER JE EIGEN FIREBASE CONFIG IN ===
+// Firebase configuratie
 const firebaseConfig = {
   apiKey: "AIzaSyBpJ7VnA7Z9zrb8K4adtz8g4lpXeyk_i2M",
   authDomain: "studio-6160446129-eb66a.firebaseapp.com",
@@ -11,110 +11,77 @@ const firebaseConfig = {
   appId: "1:248966967112:web:415456d13a30e164790d7d"
 };
 
-// Firebase initialiseren
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
-// Verwijzing naar het document waar we de lijst met begeleiders in bewaren
 const configRef = doc(db, "instellingen", "begeleidersDoc");
 
-const form = document.getElementById('add-begeleider-form');
+// === PLAK HIERONDER JE SHAREPOINT DOWNLOAD LINK TUSSEN DE AANHALINGSTEKENS ===
+const excelCsvUrl = "https://stichtingdedroomboom.sharepoint.com/sites/DirectieKluis/_layouts/15/Doc.aspx?sourcedoc={313e7626-e388-440c-8c33-a22e4b01413d}&action=download&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&wdInConfigurator=True&wdInConfigurator=True&edaebf=rslc0
+";
+
 const lijstDiv = document.getElementById('collega-lijst');
 
-// 1. Live de huidige collega's inladen uit Firebase
-onSnapshot(configRef, (snapshot) => {
-    lijstDiv.innerHTML = "";
+// Functie die de SharePoint Excel live uitleest en naar Firebase stuurt
+async function synchroniseerMetSharePoint() {
+    try {
+        const response = await fetch(excelCsvUrl);
+        const text = await response.text();
+        const regels = text.split(/\r?\n/);
+        const uniekeNamen = [];
 
-    if (snapshot.exists() && snapshot.data().namen) {
-        const namen = snapshot.data().namen;
+        // We starten bij rij 3 (index 2) omdat rij 1 en 2 de koppen bevatten
+        for (let i = 2; i < regels.length; i++) {
+            const regel = regels[i].trim();
+            if (!regel) continue;
 
-        if (namen.length === 0) {
-            lijstDiv.innerHTML = "<p>Er zijn nog geen begeleiders toegevoegd.</p>";
-            return;
+            // Split de regel op komma of puntkomma
+            const kolommen = regel.split(/[;,]/);
+            const naam = kolommen[0] ? kolommen[0].replace(/"/g, '').trim() : "";
+            
+            // Filter lege regels en koppen uit de data
+            if (naam && naam.length > 1 && !naam.toLowerCase().includes("dag")) {
+                if (!uniekeNamen.includes(naam)) {
+                    uniekeNamen.push(naam);
+                }
+            }
         }
 
-        // Loop door alle namen en maak er mooie rijen van (zelfde styling als de kinderen)
-        namen.forEach(naam => {
-            const row = document.createElement('div');
-            row.className = 'kind-row';
-            row.innerHTML = `
-                <span class="kind-name">👤 ${naam}</span>
-                <button class="btn-delete" data-naam="${naam}">🗑️</button>
-            `;
-            lijstDiv.appendChild(row);
-        });
-
-        // Verwijder-knoppen (ontslagen) activeren
-        document.querySelectorAll('.btn-delete').forEach(button => {
-            button.addEventListener('click', async (e) => {
-                const buttonElement = e.target.closest('.btn-delete');
-                const naamTeVerwijderen = buttonElement.getAttribute('data-naam');
-                
-                if (confirm(`Weet je zeker dat je ${naamTeVerwijderen} wilt verwijderen uit het systeem?`)) {
-                    await updateDoc(configRef, {
-                        namen: arrayRemove(naamTeVerwijderen)
-                    });
-                }
-            });
-        });
-    } else {
-        lijstDiv.innerHTML = "<p>Geen data gevonden. Voeg je eerste collega toe!</p>";
-    }
-});
-
-// 2. Collega toevoegen (Aannemen) via het formulier
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const inputVeld = document.getElementById('begeleider-name');
-    const nieuweNaam = inputVeld.value.trim();
-    
-    if (!nieuweNaam) return;
-
-    try {
-        // Voeg de naam toe aan de array in Firebase (maakt het document aan als het nog niet bestaat)
-        await setDoc(configRef, {
-            namen: arrayUnion(nieuweNaam)
-        }, { merge: true });
-        
-        inputVeld.value = ""; // Maak het inputveld netjes leeg
+        // Synchroniseer de lijst met Firebase
+        await setDoc(configRef, { namen: uniekeNamen }, { merge: true });
+        console.log("Synchronisatie met SharePoint gelukt!");
     } catch (error) {
-        console.error("Fout bij toevoegen collega:", error);
+        console.error("Fout bij ophalen SharePoint-bestand:", error);
     }
-});
-
-// 3. Donkere modus logica (onthoudt de keuze van de gebruiker)
-const themeButton = document.getElementById('theme-button');
-if (localStorage.getItem('theme') === 'dark') {
-    document.body.classList.add('dark-mode');
-    themeButton.innerText = "☀️ Licht";
 }
 
-themeButton.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    if (document.body.classList.contains('dark-mode')) {
-        themeButton.innerText = "☀️ Licht";
-        localStorage.setItem('theme', 'dark');
-    } else {
-        themeButton.innerText = "🌙 Donker";
-        localStorage.setItem('theme', 'light');
+// Haal de lijst op uit Firebase voor de weergave
+onSnapshot(configRef, (snapshot) => {
+    lijstDiv.innerHTML = "";
+    if (snapshot.exists() && snapshot.data().namen) {
+        snapshot.data().namen.forEach(naam => {
+            const row = document.createElement('div');
+            row.className = 'kind-row';
+            row.innerHTML = `<span class="kind-name">👤 ${naam}</span>`;
+            lijstDiv.appendChild(row);
+        });
     }
 });
 
-// 4. Hamburger menu logica (openen en sluiten van de sidebar)
+// Start proces
+synchroniseerMetSharePoint();
+
+// --- UI LOGICA ---
+const themeButton = document.getElementById('theme-button');
+themeButton.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+});
+
 const sidebar = document.getElementById('sidebar');
 const menuToggle = document.getElementById('menu-toggle');
 const menuClose = document.getElementById('menu-close');
-
-menuToggle.addEventListener('click', () => {
-    sidebar.classList.add('open');
-});
-
-menuClose.addEventListener('click', () => {
-    sidebar.classList.remove('open');
-});
-
+menuToggle.addEventListener('click', () => sidebar.classList.add('open'));
+menuClose.addEventListener('click', () => sidebar.classList.remove('open'));
 document.addEventListener('click', (e) => {
-    if (!sidebar.contains(e.target) && e.target !== menuToggle) {
-        sidebar.classList.remove('open');
-    }
+    if (!sidebar.contains(e.target) && e.target !== menuToggle) sidebar.classList.remove('open');
 });
