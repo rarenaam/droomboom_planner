@@ -27,15 +27,15 @@ body {
     background-color: var(--bg-color);
     color: var(--dark-color);
     margin: 0;
-    padding: 20px;
-    transition: background-color 0.3s, color 0.3s; /* Vloeiende overgang */
+    padding: 80px 20px 20px 20px; /* Bovenste padding verhoogd vanwege zwevende knoppen */
+    transition: background-color 0.3s, color 0.3s;
 }
 
 header {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Zorgt dat de knop netjes rechts staat */
-    margin-bottom: 30px;
+    justify-content: space-between;
+    margin-bottom: 20px;
     border-bottom: 2px solid var(--border-color);
     padding-bottom: 15px;
 }
@@ -51,26 +51,25 @@ header h1 {
     font-size: 1.8rem;
 }
 
-.btn-back {
-    text-decoration: none;
-    color: var(--dark-color);
-    background: var(--border-color);
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-weight: bold;
-    transition: background 0.2s;
-}
-
-.btn-back:hover {
-    filter: brightness(0.9);
-}
-
 .editor-container {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 25px;
     max-width: 800px;
     margin: 0 auto;
+}
+
+/* Link naar collega-beheer */
+.link-manage {
+    color: var(--primary-blue);
+    font-weight: bold;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    align-self: flex-start;
+}
+
+.link-manage:hover {
+    opacity: 0.8;
 }
 
 /* Formulier Styling */
@@ -167,27 +166,133 @@ header h1 {
     font-size: 1.2rem;
     cursor: pointer;
     padding: 0 5px;
+    transition: transform 0.2s;
 }
 
 .btn-delete:hover {
     transform: scale(1.2);
 }
 
-/* Knop voor thema wissel */
+/* --- FIXED POSITIONS VOOR BOVENSTE KNOPPEN --- */
 .theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
     background: var(--card-bg);
     color: var(--dark-color);
     border: 1px solid var(--border-color);
-    padding: 8px 14px;
+    padding: 10px 16px;
     border-radius: 20px;
     cursor: pointer;
     font-weight: bold;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     transition: all 0.2s;
+    z-index: 100;
 }
 
 .theme-toggle:hover {
     transform: scale(1.05);
+}
+
+.hamburger-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: var(--card-bg);
+    color: var(--dark-color);
+    border: 1px solid var(--border-color);
+    padding: 10px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: all 0.2s;
+    z-index: 100;
+}
+
+.hamburger-btn:hover {
+    transform: scale(1.05);
+}
+
+/* --- SIDEBAR STYLING --- */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 290px;
+    height: 100vh;
+    background-color: var(--card-bg);
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 25px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out; 
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+.close-btn {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    color: var(--dark-color);
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.2s;
+}
+
+.close-btn:hover {
+    transform: scale(1.1);
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 2px solid var(--bg-color);
+    padding-bottom: 15px;
+}
+
+.sidebar-header h2 {
+    margin: 0;
+    font-size: 1.6rem;
+}
+
+.sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.sidebar-links li a {
+    display: block;
+    padding: 14px 16px;
+    color: var(--dark-color);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    background-color: var(--bg-color);
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.sidebar-links li a:hover {
+    background-color: #e2e8f0;
+    transform: translateX(5px);
+}
+
+body.dark-mode .sidebar-links li a:hover {
+    background-color: #3d3d3d;
 }
 
 /* Mobiele optimalisatie */
