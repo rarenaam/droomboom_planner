@@ -85,3 +85,25 @@ themeButton.addEventListener('click', () => {
         localStorage.setItem('theme', 'light'); // Opslaan in de browser
     }
 });
+
+// Sidebar logica openen en sluiten
+const sidebar = document.getElementById('sidebar');
+const menuToggle = document.getElementById('menu-toggle');
+const menuClose = document.getElementById('menu-close');
+
+// Open menu bij klik op hamburger
+menuToggle.addEventListener('click', () => {
+    sidebar.classList.add('open');
+});
+
+// Sluit menu bij klik op kruisje
+menuClose.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+});
+
+// Sluit menu automatisch als je ergens buiten de sidebar klikt
+document.addEventListener('click', (e) => {
+    if (!sidebar.contains(e.target) && e.target !== menuToggle) {
+        sidebar.classList.remove('open');
+    }
+});
